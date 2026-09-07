@@ -67,9 +67,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
       location.href = "index.html";
     } catch (error) {
+      const errorMessages = {
+        invalid_credentials: "Invalid email or password.",
+        email_not_confirmed: "Confirm your email address in Supabase before signing in.",
+        user_not_found: "No Supabase Auth account exists for this email.",
+      };
       notice.textContent = error.message.includes("authorized")
         ? error.message
-        : "Login failed. Check your email, password, and connection.";
+        : errorMessages[error.code] || error.message || "Login failed. Check your email, password, and connection.";
       notice.className = "notice error show";
       button.disabled = false;
       button.textContent = "Login to Dashboard";
